@@ -1,9 +1,26 @@
-const express = require("express");
+import express from "express";
+
+import cors from "cors";
+
+const port = 6900;
+
+import path from "path";
+
+import helmet from "helmet";
+
+import dotenv from "dotenv";
+dotenv.config();
+
+import {clog,cerr} from "easier-jsever";
+
 const app = express();
-const cors = require("cors");
-app.use(cors())
 
+app.use(express.urlencoded({ extended: false }));
 
-app.listen(4200,()=>{
-    console.log("server started at 4200")
-})
+app.use(express.json());
+
+app.use(helmet());
+
+app.use(cors("http://localhost:4700"))
+
+app.listen(port , ()=>clog(`server is running on port ${port}`));

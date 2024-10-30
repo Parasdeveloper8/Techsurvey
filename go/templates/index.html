@@ -3,12 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blogs</title>
-    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
+    <title>Blog Website</title>
+    <link rel="stylesheet" href="static/css/style.css" type="text/css">
 </head>
 <body>
-    <h1>{{.Name}}</h1>
-    <p>Hello</p>
-    <p>Crypto</p>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">Techsurvey</div>
+        </div>
+        <div class="nav-right">
+            <button class="create-post-btn">given surveys</button>
+            <div class="profile-icon">
+                <img src="profile-pic.jpg" alt="Profile">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Categories</h2>
+            <ul>
+               <li><a href="/surveypage" style="color:black">Surveys of 2024</a></li>
+            </ul>
+        </aside>
+
+        <section class="posts-section">
+            <div class="post">
+                <h2>Introducing Techsurvey</h2>
+                <p>Give survey and help us to know world better</p>
+                <div class="fake-line"></div>
+                <ul style="margin-top: 5vh;">
+                    <li style="color:red">Frontend Developer</li>
+                    <li style="color:yellow">Backend Developer</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Techsurvey. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </footer>
 </body>
 </html>
