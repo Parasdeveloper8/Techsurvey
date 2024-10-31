@@ -27,9 +27,9 @@ func main() {
 
 	router.POST("/register", auth.HandleRegister)
 
-	router.Run(":4700")
-
 	router.POST("/login", auth.HandleLogin)
+
+	router.Run(":4700")
 }
 func serveAfterLog(c *gin.Context) {
 	c.HTML(http.StatusOK, "afterlog.html", nil)

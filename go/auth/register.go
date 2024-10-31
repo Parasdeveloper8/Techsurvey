@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"time"
 
@@ -53,27 +54,26 @@ func HandleRegister(c *gin.Context) {
 		c.JSON(500, gin.H{"error": "Failed to hash password"})
 		return
 	}
-
 	// Insert data into the database
 	query := "INSERT INTO techsurvey.users (username, password, created, email) VALUES (?, ?, ?, ?)"
 	result, err := db.Exec(query, name, hashedPassword, currentDate, email)
 	if err != nil {
-		c.JSON(500, gin.H{"error": "Failed to insert data into database"})
+		c.JSON(500, gin.H{"error": "Failed to insert data into database or already registered"})
 		return
 	}
-
+	fmt.Println(result)
 	// Retrieve the last inserted ID
-	lastInsertID, err := result.LastInsertId()
-	if err != nil {
-		c.JSON(500, gin.H{"error": "Failed to retrieve last insert ID"})
-		return
-	}
+	//lastInsertID, err := result.LastInsertId()
+	//if err != nil {
+	//c.JSON(500, gin.H{"error": "Failed to retrieve last insert ID"})
+	//return
+	//}
 
 	// Return success response
-	c.JSON(200, gin.H{
-		"message": "User registered successfully!",
-		"user_id": lastInsertID,
-	})
+	//c.JSON(200, gin.H{
+	//"message": "User registered successfully!",
+	//})
+	c.Redirect(http.StatusSeeOther, "/logpage?message=User registered successfully!")
 }
 
 // HashPassword hashes a password with bcrypt

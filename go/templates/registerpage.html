@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <form id="registerForm" action="/register" method="post">
+        <form id="registerForm" action="http://localhost:4700/register" method="POST">
             <h2>Register</h2>
             <div class="input-group">
                 <label for="name">Name</label>
@@ -27,7 +27,7 @@
                 <input type="password" id="checkPassword" name="checkPassword" required>
                 <span id="passwordError" class="error-message"></span>
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" id="sbtn">Register</button>
         </form>
     </div>
     <script src="static/javascript/script.js"></script>
