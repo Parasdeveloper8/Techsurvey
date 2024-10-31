@@ -20,9 +20,13 @@ func main() {
 			"Name": "User",
 		})
 	})
-
+	router.GET("/regpage", serveRegPage)
 	router.GET("/surveypage", serveSurveyPageRoute)
+	//router.POST("/register", register.handleRegister)
 	router.Run(":4700")
+}
+func serveRegPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "registerpage.html", nil)
 }
 func serveSurveyPageRoute(c *gin.Context) {
 	c.HTML(http.StatusOK, "surveypages.html", nil)
