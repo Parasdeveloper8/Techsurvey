@@ -15,14 +15,12 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Package-level variables
 var (
 	jwtKey []byte
 	store  *sessions.CookieStore
-	dsn    string // Define your DSN here or load it from the .env file
+	dsn    string
 )
 
-// Initialize environment variables, JWT key, and session store
 func init() {
 	// Load .env file
 	if err := godotenv.Load("../.env"); err != nil {
@@ -37,6 +35,13 @@ func init() {
 
 	// Initialize session store with secret key
 	store = sessions.NewCookieStore(jwtKey)
+	store.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   86400 * 7, // 1 week
+		HttpOnly: true,
+		Secure:   false, // Use `true` in production
+		SameSite: http.SameSiteLaxMode,
+	}
 	dsn = os.Getenv("DSN")
 }
 
@@ -45,9 +50,9 @@ func SessionMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		session, err := store.Get(c.Request, "login-session")
 		if err != nil {
-			log.Println("Failed to get session:", err) // Log the error
+			log.Println("Failed to get session:", err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get session"})
-			c.Abort() // Stop processing
+			c.Abort()
 			return
 		}
 		// Store session in context
@@ -65,44 +70,35 @@ func HandleLogin(c *gin.Context) {
 	}
 	defer db.Close()
 
-	// Verify database connection
-	if err := db.Ping(); err != nil {
-		log.Fatal("Database connection failed:", err)
-	}
-
 	// Get form values
 	email := c.PostForm("email")
 	pass := c.PostForm("password")
 
-	// Query the user
 	var (
 		username string
 		password string
 	)
 	query := "SELECT username, password FROM techsurvey.users WHERE email = ?"
-	if err := db.QueryRow(query, email).Scan(&username, &password); err != nil {
-		if err == sql.ErrNoRows {
-			c.JSON(http.StatusUnauthorized, gin.H{"message": "User not found"})
-		} else {
-			log.Printf("Database query error: %v", err) // Log the actual error
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database query error"})
-		}
+	err = db.QueryRow(query, email).Scan(&username, &password)
+	if err == sql.ErrNoRows {
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "User not found"})
+		return
+	} else if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database query error"})
+		log.Printf("Database query error: %v", err)
 		return
 	}
 
-	// Validate the password
 	if !CheckPassword(password, pass) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid password"})
 		return
 	}
 
-	// Create JWT claims
 	claims := &jwt.StandardClaims{
 		ExpiresAt: time.Now().Add(1 * time.Hour).Unix(),
 		Issuer:    "techsurvey",
 	}
 
-	// Generate token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
@@ -110,25 +106,29 @@ func HandleLogin(c *gin.Context) {
 		return
 	}
 
-	// Retrieve the session and set values
 	session, exists := c.Get("session")
 	if !exists {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Session not found"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": session, "err": exists})
 		return
 	}
 
-	sess := session.(*sessions.Session)
+	sess, ok := session.(*sessions.Session)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Session type assertion failed"})
+		return
+	}
+
 	sess.Values["username"] = username
 	sess.Values["email"] = email
 	sess.Values["token"] = tokenString
 
-	if err := sess.Save(c.Request, c.Writer); err != nil {
+	err = sess.Save(c.Request, c.Writer)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
-
-	// Redirect after successful login
-	c.Redirect(http.StatusSeeOther, "/afterlog?message=User logged in successfully!")
+	c.Redirect(http.StatusSeeOther, "/afterlog?user logged in successfully")
+	//c.JSON(http.StatusOK, gin.H{"message": "ok"})
 }
 
 // CheckPassword compares a hashed password with a plain password
