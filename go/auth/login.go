@@ -27,14 +27,14 @@ func init() {
 		log.Fatal("Error loading .env file")
 	}
 
-	secretKey := os.Getenv("SECRETKEY")
-	if secretKey == "" {
+	secretKey := []byte(os.Getenv("SECRETKEY"))
+	if secretKey == nil {
 		log.Fatal("Secret key not found in environment")
 	}
-	jwtKey = []byte(secretKey)
+	jwtKey = secretKey
 
 	// Initialize session store with secret key
-	store = sessions.NewCookieStore(jwtKey)
+	store = sessions.NewCookieStore(secretKey)
 	store.Options = &sessions.Options{
 		Path:     "/",
 		MaxAge:   86400 * 7, // 1 week
@@ -108,7 +108,7 @@ func HandleLogin(c *gin.Context) {
 
 	session, exists := c.Get("session")
 	if !exists {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": session, "err": exists})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "session not found"})
 		return
 	}
 
@@ -128,7 +128,6 @@ func HandleLogin(c *gin.Context) {
 		return
 	}
 	c.Redirect(http.StatusSeeOther, "/afterlog?user logged in successfully")
-	//c.JSON(http.StatusOK, gin.H{"message": "ok"})
 }
 
 // CheckPassword compares a hashed password with a plain password

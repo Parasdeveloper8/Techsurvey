@@ -13,7 +13,7 @@ func main() {
 	router.Static("/static", "./static")
 
 	router.LoadHTMLGlob("templates/*")
-
+	router.Use(auth.SessionMiddleware())
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
@@ -22,8 +22,8 @@ func main() {
 	router.GET("/regpage", serveRegPage)
 	router.GET("/surveypage", serveSurveyPageRoute)
 	router.POST("/register", auth.HandleRegister)
-	router.POST("/login", auth.HandleLogin, auth.SessionMiddleware()) // Removed redundant SessionMiddleware here
-	router.GET("/afterlog", serveAfterLog)                            // Moved before Run()
+	router.POST("/login", auth.HandleLogin) // Removed redundant SessionMiddleware here
+	router.GET("/afterlog", serveAfterLog)  // Moved before Run()
 	router.Run(":4700")
 }
 
