@@ -2,6 +2,7 @@ package auth
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -63,21 +64,16 @@ func SessionMiddleware() gin.HandlerFunc {
 
 // HandleLogin authenticates the user and sets session information
 func HandleLogin(c *gin.Context) {
-	// Connect to the database
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("Failed to connect to the database:", err)
 	}
 	defer db.Close()
 
-	// Get form values
 	email := c.PostForm("email")
 	pass := c.PostForm("password")
 
-	var (
-		username string
-		password string
-	)
+	var username, password string
 	query := "SELECT username, password FROM techsurvey.users WHERE email = ?"
 	err = db.QueryRow(query, email).Scan(&username, &password)
 	if err == sql.ErrNoRows {
@@ -106,23 +102,13 @@ func HandleLogin(c *gin.Context) {
 		return
 	}
 
-	session, exists := c.Get("session")
-	if !exists {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "session not found"})
-		return
-	}
+	session := c.MustGet("session").(*sessions.Session) // Retrieve the session from context
 
-	sess, ok := session.(*sessions.Session)
-	if !ok {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Session type assertion failed"})
-		return
-	}
+	session.Values["username"] = username
+	session.Values["email"] = email
+	session.Values["token"] = tokenString
 
-	sess.Values["username"] = username
-	sess.Values["email"] = email
-	sess.Values["token"] = tokenString
-
-	err = sess.Save(c.Request, c.Writer)
+	err = session.Save(c.Request, c.Writer)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
@@ -134,4 +120,20 @@ func HandleLogin(c *gin.Context) {
 func CheckPassword(hashedPassword, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	return err == nil
+}
+
+// HandleLogout handles user logout
+func HandleLogout(c *gin.Context) {
+	session := c.MustGet("session").(*sessions.Session) // Use the session from context
+
+	// Clear the session data
+	session.Values = make(map[interface{}]interface{}) // Reset the session data
+	err := session.Save(c.Request, c.Writer)           // Save the cleared session
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to log out"})
+		return
+	}
+
+	fmt.Println("Session destroyed")
+	c.Redirect(http.StatusSeeOther, "/") // Redirect to home
 }
