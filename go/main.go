@@ -17,29 +17,29 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
-	router.GET("/afterlog", serveAfterLog)
 
 	router.GET("/logpage", serveLogPage)
-
 	router.GET("/regpage", serveRegPage)
-
 	router.GET("/surveypage", serveSurveyPageRoute)
-
 	router.POST("/register", auth.HandleRegister)
-
-	router.POST("/login", auth.HandleLogin)
+	router.POST("/login", auth.HandleLogin, auth.SessionMiddleware()) // Removed redundant SessionMiddleware here
+	router.GET("/afterlog", serveAfterLog)                            // Moved before Run()
 
 	router.Run(":4700")
 }
-func serveAfterLog(c *gin.Context) {
-	c.HTML(http.StatusOK, "afterlog.html", nil)
-}
+
 func serveLogPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "loginpage.html", nil)
 }
+
 func serveRegPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "registerpage.html", nil)
 }
+
 func serveSurveyPageRoute(c *gin.Context) {
 	c.HTML(http.StatusOK, "surveypages.html", nil)
+}
+
+func serveAfterLog(c *gin.Context) {
+	c.HTML(http.StatusOK, "afterlog.html", nil)
 }
