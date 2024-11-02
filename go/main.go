@@ -18,9 +18,7 @@ func main() {
 	router.Use(auth.SessionMiddleware())
 	//Middlewares end
 
-	router.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", nil)
-	})
+	router.GET("/", auth.HandleHome)
 	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
 	router.GET("/logpage", serveLogPage)
 	router.GET("/regpage", serveRegPage)
