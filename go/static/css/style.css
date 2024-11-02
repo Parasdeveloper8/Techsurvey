@@ -127,10 +127,9 @@ body {
     color: #fff;
     text-align: center;
     padding: 1rem;
-    bottom: 0;
+    position: absolute;
     left:0;
     right:0;
-    position:absolute;
     bottom:0;
 }
 
