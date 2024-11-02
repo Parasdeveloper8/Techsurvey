@@ -107,13 +107,14 @@ func HandleLogin(c *gin.Context) {
 	session.Values["username"] = username
 	session.Values["email"] = email
 	session.Values["token"] = tokenString
-
+	//fmt.Println(session.Values["email"])
 	err = session.Save(c.Request, c.Writer)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save session"})
 		return
 	}
 	c.Redirect(http.StatusSeeOther, "/afterlog?user logged in successfully")
+	fmt.Println(session)
 }
 
 // CheckPassword compares a hashed password with a plain password
@@ -141,7 +142,7 @@ func HandleLogout(c *gin.Context) {
 // middleware to check if email exists in session
 func CheckEmail() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		session, _ := store.Get(c.Request, "my_session")
+		session, _ := store.Get(c.Request, "login-session")
 		sessionEmail, ok := session.Values["email"].(string)
 		if !ok || sessionEmail == "" {
 			c.Redirect(http.StatusFound, "/logpage") // Redirect to login page

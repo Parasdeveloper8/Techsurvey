@@ -26,8 +26,8 @@ func main() {
 	router.GET("/regpage", serveRegPage)
 	router.GET("/surveypage", auth.CheckEmail(), serveSurveyPageRoute)
 	router.POST("/register", auth.HandleRegister)
-	router.POST("/login", auth.HandleLogin)                   // Removed redundant SessionMiddleware here
-	router.GET("/afterlog", auth.CheckEmail(), serveAfterLog) // Moved before Run()
+	router.POST("/login", auth.HandleLogin) // Removed redundant SessionMiddleware here
+	router.GET("/afterlog", serveAfterLog)  // Moved before Run()
 	router.POST("/logout", auth.HandleLogout)
 	router.Run(":4700")
 }

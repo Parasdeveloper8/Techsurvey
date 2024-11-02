@@ -1,10 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="static/css/style.css" type="text/css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f0f4f8;
+    }
+
+    .survey-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .survey-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .survey-form input[type="email"],
+    .survey-form input[type="password"] {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .survey-form input[type="email"]:focus,
+    .survey-form input[type="password"]:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .survey-form button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #007bff;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .survey-form button:hover {
+      background-color: #0056b3;
+    }
+
+    .survey-form button:active {
+      transform: scale(0.98);
+    }
+  </style>
 </head>
 <body>
     <nav class="navbar">
@@ -15,7 +85,37 @@
             <form action="/afterlog" method="get">
                 <button type="submit" class="create-post-btn">Home</button>
             </form>
+           <!-- <div class="profile-icon">
+                <img src="profile-pic.jpg" alt="Profile">
+            </div>-->
         </div>
-        </nav>
-        </body>
-        </html>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Surveys</h2>
+            <ul>
+               <li><a href="/surveypage" style="color:black">Surveys of 2024</a></li>
+            </ul>
+        </aside>
+  <div class="survey-container">
+    <h2 class="survey-title">Survey about your languages</h2>
+    <form class="survey-form" action="/" method="post">
+      <input type="number" placeholder="number of languages ex:-2" name="numofp" required/>
+      <input type="text" name="favp" placeholder="your favourite language" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <footer class="footer">
+    <p>&copy; 2024 Techsurvey. All rights reserved.</p>
+    <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy Policy</a>
+        </div>
+        </footer>
+        </div>
+</body>
+</html>
