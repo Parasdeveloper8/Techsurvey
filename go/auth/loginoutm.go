@@ -137,3 +137,17 @@ func HandleLogout(c *gin.Context) {
 	fmt.Println("Session destroyed")
 	c.Redirect(http.StatusSeeOther, "/") // Redirect to home
 }
+
+// middleware to check if email exists in session
+func CheckEmail() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		session, _ := store.Get(c.Request, "my_session")
+		sessionEmail, ok := session.Values["email"].(string)
+		if !ok || sessionEmail == "" {
+			c.Redirect(http.StatusFound, "/logpage") // Redirect to login page
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}

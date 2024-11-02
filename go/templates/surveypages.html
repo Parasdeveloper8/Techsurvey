@@ -12,10 +12,12 @@
             <div class="logo">Techsurvey</div>
         </div>
         <div class="nav-right">
-            <button class="create-post-btn">given surveys</button>
-            <div class="profile-icon">
+            <form action="/afterlog" method="get">
+                <button type="submit" class="create-post-btn">Home</button>
+            </form>
+           <!-- <div class="profile-icon">
                 <img src="profile-pic.jpg" alt="Profile">
-            </div>
+            </div>-->
         </div>
     </nav>
 
@@ -28,6 +30,10 @@
                <li><a href="/surveypage" style="color:black">Surveys of 2024</a></li>
             </ul>
         </aside>
+        <div class="sidebar">
+               <p>Vote to your favourite programming language</p>
+               <p><a href="/favpro">Go Fast and vote</a></p>
+               </div>
         <footer class="footer">
             <p>&copy; 2024 Techsurvey. All rights reserved.</p>
             <div class="footer-links">

@@ -13,17 +13,21 @@ func main() {
 	router.Static("/static", "./static")
 
 	router.LoadHTMLGlob("templates/*")
+
+	//Middlewares start
 	router.Use(auth.SessionMiddleware())
+	//Middlewares end
+
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})
-
+	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
 	router.GET("/logpage", serveLogPage)
 	router.GET("/regpage", serveRegPage)
-	router.GET("/surveypage", serveSurveyPageRoute)
+	router.GET("/surveypage", auth.CheckEmail(), serveSurveyPageRoute)
 	router.POST("/register", auth.HandleRegister)
-	router.POST("/login", auth.HandleLogin) // Removed redundant SessionMiddleware here
-	router.GET("/afterlog", serveAfterLog)  // Moved before Run()
+	router.POST("/login", auth.HandleLogin)                   // Removed redundant SessionMiddleware here
+	router.GET("/afterlog", auth.CheckEmail(), serveAfterLog) // Moved before Run()
 	router.POST("/logout", auth.HandleLogout)
 	router.Run(":4700")
 }
@@ -42,4 +46,7 @@ func serveSurveyPageRoute(c *gin.Context) {
 
 func serveAfterLog(c *gin.Context) {
 	c.HTML(http.StatusOK, "afterlog.html", nil)
+}
+func serveFavProForm(c *gin.Context) {
+	c.HTML(http.StatusOK, "favproform.html", nil)
 }
