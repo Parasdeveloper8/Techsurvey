@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	routes "github.com/Parasdeveloper8/myexpgoweb/Routes"
 	"github.com/Parasdeveloper8/myexpgoweb/auth"
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func main() {
 	router.Use(auth.SessionMiddleware())
 	//Middlewares end
 
-	router.GET("/", auth.HandleHome)
+	router.GET("/", routes.HandleHome)
 	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
 	router.GET("/logpage", serveLogPage)
 	router.GET("/regpage", serveRegPage)
