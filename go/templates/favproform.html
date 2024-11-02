@@ -3,24 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: #f0f4f8;
-    }
-
-    .survey-container {
+  <title>Fav Lang survey</title>
+  <link rel="stylesheet" href="static/css/style.css" type="text/css">
+</head>
+<style>
+      .survey-container {
       background: #ffffff;
       width: 100%;
       max-width: 400px;
@@ -37,8 +24,8 @@
       margin-bottom: 2rem;
     }
 
-    .survey-form input[type="email"],
-    .survey-form input[type="password"] {
+    .survey-form input[type="text"],
+    .survey-form input[type="number"] {
       width: 100%;
       padding: 0.8rem;
       margin-bottom: 1.5rem;
@@ -48,8 +35,8 @@
       color: #333;
     }
 
-    .survey-form input[type="email"]:focus,
-    .survey-form input[type="password"]:focus {
+    .survey-form input[type="text"]:focus,
+    .survey-form input[type="number"]:focus {
       outline: none;
       border-color: #007bff;
     }
@@ -74,8 +61,7 @@
     .survey-form button:active {
       transform: scale(0.98);
     }
-  </style>
-</head>
+</style>
 <body>
     <nav class="navbar">
         <div class="nav-left">
