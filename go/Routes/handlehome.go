@@ -10,10 +10,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var (
-	JwtKey []byte
-	store  *sessions.CookieStore
-)
+var store *sessions.CookieStore
 
 func init() {
 	// Load .env file
@@ -25,7 +22,6 @@ func init() {
 	if secretKey == nil {
 		log.Fatal("Secret key not found in environment")
 	}
-	JwtKey = secretKey
 
 	// Initialize session store with secret key
 	store = sessions.NewCookieStore(secretKey)
@@ -44,7 +40,7 @@ func HandleHome(c *gin.Context) {
 	session, err := store.Get(c.Request, "login-session")
 	if err != nil {
 		// Handle session retrieval error if needed
-		c.HTML(http.StatusInternalServerError, "error.html", gin.H{"message": "Session error"})
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get session"})
 		return
 	}
 
