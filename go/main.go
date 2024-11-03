@@ -26,6 +26,7 @@ func main() {
 	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
 	router.GET("/logpage", serveLogPage)
 	router.GET("/regpage", serveRegPage)
+	router.GET("/admin", serveAdminPage)
 	router.GET("/surveypage", auth.CheckEmail(), serveSurveyPageRoute)
 	router.POST("/register", auth.HandleRegister)
 	router.POST("/login", auth.HandleLogin)
@@ -52,4 +53,7 @@ func serveAfterLog(c *gin.Context) {
 }
 func serveFavProForm(c *gin.Context) {
 	c.HTML(http.StatusOK, "favproform.html", nil)
+}
+func serveAdminPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "admin.html", nil)
 }
