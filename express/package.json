@@ -2,7 +2,10 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "easier-jsever": "^1.1.10",
     "express": "^4.21.1",
-    "helmet": "^8.0.0"
-  }
+    "helmet": "^8.0.0",
+    "mysql2": "^3.11.3"
+  },
+  "type": "module"
 }
