@@ -5,6 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
     <link rel="stylesheet" href="static/css/style.css" type="text/css">
+    <style>
+        button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 25vw;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+textarea{
+   text-align: center;
+   width:50vw;
+   margin-left: 25vw;
+   margin-right: 25vw;
+}
+@media only screen and (max-width:850px){
+    textarea{
+        width:80vw;
+        margin-right: 10vw;
+        margin-left: 10vw;
+    }
+}
+</style>
 </head>
 <body>
     <nav class="navbar">
@@ -20,5 +48,12 @@
             </div>-->
         </div>
     </nav>
+    <form action="subfeed" method="post">
+        <p style="text-align:center;font-size: 1.5rem;padding:10px;">Your feedback is important to us</p>
+        <textarea cols="50" rows="5" 
+        placeholder="Give your feedback"></textarea>
+        <button type="submit">Post</button>
+        <p style="padding: 10px;"><b>Next:</b>After this you will be redirected to home</p>
+    </form>
 </body>
 </html>
