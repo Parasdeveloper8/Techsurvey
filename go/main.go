@@ -5,6 +5,7 @@ import (
 
 	routes "github.com/Parasdeveloper8/myexpgoweb/Routes"
 	"github.com/Parasdeveloper8/myexpgoweb/auth"
+	"github.com/Parasdeveloper8/myexpgoweb/limiter"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +17,8 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 
 	//Middlewares start
+	router.Use(limiter.RateLimit())
+
 	router.Use(auth.SessionMiddleware())
 	//Middlewares end
 
