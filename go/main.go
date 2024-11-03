@@ -5,6 +5,7 @@ import (
 
 	routes "github.com/Parasdeveloper8/myexpgoweb/Routes"
 	"github.com/Parasdeveloper8/myexpgoweb/auth"
+	"github.com/Parasdeveloper8/myexpgoweb/cors"
 	"github.com/Parasdeveloper8/myexpgoweb/limiter"
 	"github.com/gin-gonic/gin"
 )
@@ -21,6 +22,8 @@ func main() {
 
 	router.Use(auth.SessionMiddleware())
 	//Middlewares end
+	// Set up CORS
+	cors.SetupCORS(router)
 
 	router.GET("/", routes.HandleHome)
 	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
