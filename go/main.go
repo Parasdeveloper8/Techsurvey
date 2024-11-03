@@ -33,7 +33,7 @@ func main() {
 	router.GET("/surveypage", auth.CheckEmail(), serveSurveyPageRoute)
 	router.POST("/register", auth.HandleRegister)
 	router.POST("/login", auth.HandleLogin)
-	router.GET("/afterlog", serveAfterLog)
+	router.GET("/afterlog", auth.CheckEmail(), serveAfterLog)
 	router.POST("/logout", auth.HandleLogout)
 	router.POST("/submitfav", routes.HandleSurveySubmission)
 	router.Run(":4700")
