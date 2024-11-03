@@ -175,3 +175,43 @@ body {
         padding: 0.4rem 0.8rem;
     }
 }
+    /* Styles for the admin panel */
+    #adminOption {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        padding: 20px;
+        background-color: #333;
+        color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        z-index: 1000;
+    }
+
+    #adminOption h2 {
+        margin-top: 0;
+        font-size: 1.5em;
+        color: #ffdd57;
+    }
+
+    #adminOption p {
+        font-size: 1em;
+        line-height: 1.4;
+    }
+
+    /* Overlay for focus effect */
+    #adminOverlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
