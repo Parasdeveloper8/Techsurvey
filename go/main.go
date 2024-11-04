@@ -37,6 +37,7 @@ func main() {
 	router.POST("/logout", auth.HandleLogout)
 	router.GET("/feedback", serveGiveFeedBack)
 	router.POST("/submitfav", routes.HandleSurveySubmission)
+	router.POST("/subfeed", auth.CheckEmail(), routes.HandleFeedSubmission)
 	router.Run(":4700")
 }
 
