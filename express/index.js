@@ -2,6 +2,8 @@ import express from "express";
 
 import cors from "cors";
 
+import fetchfeed from "./Routes/getFeedback.js";
+
 // Configure CORS
 const corsOptions = {
     origin: 'http://localhost:4700', // Allow requests from your frontend's origin
@@ -35,6 +37,6 @@ app.use(helmet());
 
 app.use("/getdata",fetchdata);
 
-
+app.use("/getfeedback",fetchfeed);
 
 app.listen(port , ()=>clog(`server is running on port ${port}`));
