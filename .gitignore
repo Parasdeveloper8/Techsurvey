@@ -1,3 +1,4 @@
 .env
 go/static/javascript/admin.js
 go/templates/admin.html
+go/static/javascript/adminapis.js
