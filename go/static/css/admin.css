@@ -1,0 +1,135 @@
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    max-width: 400px; /* Limit the width of the table */
+    flex: 1; /* Allow the table to grow */
+  }
+
+  thead {
+    background-color: #4a90e2;
+    color: #ffffff;
+  }
+
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  th {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f3f7fa;
+  }
+
+  tbody tr:hover {
+    background-color: #e8f0fe;
+  }
+
+  td {
+    color: #333;
+  }
+
+  /* Responsive Design for Mobile */
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+      width: 100%;
+    }
+
+    thead tr {
+      display: none;
+    }
+    table, #data-container {
+        max-width: 90%; /* Adjust width for mobile */
+    }
+    tbody tr {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    td:before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #4a90e2;
+    }
+
+    td:last-child {
+      border-bottom: none;
+    }
+    .content-container {
+        flex-direction: column; /* Stack vertically */
+        align-items: center; /* Center the content */
+    }
+  }
+  #data-container {
+    width: 80%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 400px; /* Limit the width of the data container */
+    flex: 1; /* Allow the data container to grow */
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  li {
+    padding: 15px;
+    font-size: 1rem;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s;
+  }
+
+  li:hover {
+    background-color: #f3f7fa;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 0;
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 600px) {
+    #data-container {
+      width: 90%;
+    }
+
+    li {
+      font-size: 0.9rem;
+      padding: 10px;
+    }
+
+  }
+  .content-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    padding: 20px;
+    gap: 20px; /* Space between the two divs */
+}
