@@ -14,7 +14,7 @@ body {
 
 /* Fake line style */
 .fake-line {
-    background: linear-gradient(to right, red, red, yellow);
+    background: linear-gradient(to right,blue,rgb(18, 18, 249),rgb(1, 110, 1),green);
     height: 5px;
     border: none;
     width: 30vw;
