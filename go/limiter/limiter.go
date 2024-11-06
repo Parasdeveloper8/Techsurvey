@@ -10,7 +10,7 @@ import (
 // Rate limiter middleware
 func RateLimit() gin.HandlerFunc {
 	// Create a rate limiter that allows 1 request per second with a burst of 2
-	limiter := rate.NewLimiter(1, 2)
+	limiter := rate.NewLimiter(1, 3)
 
 	return func(c *gin.Context) {
 		// Check if the request is allowed
