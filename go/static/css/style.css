@@ -228,3 +228,24 @@ body {
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
+.leaderboard-navbar {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+}
+
+.leaderboard-btn {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    display: inline-flex;
+    align-items: center;
+}
+
+.leaderboard-btn i {
+    margin-right: 8px;
+}

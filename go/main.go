@@ -33,6 +33,7 @@ func main() {
 	router.GET("/surveypage", auth.CheckEmail(), serveSurveyPageRoute)
 	router.POST("/register", auth.HandleRegister)
 	router.POST("/login", auth.HandleLogin)
+	router.GET("/leaderboard", auth.CheckEmail(), serveLeaderboard)
 	router.GET("/afterlog", auth.CheckEmail(), serveAfterLog)
 	router.POST("/logout", auth.HandleLogout)
 	router.GET("/feedback", serveGiveFeedBack)
@@ -64,4 +65,7 @@ func serveAdminPage(c *gin.Context) {
 }
 func serveGiveFeedBack(c *gin.Context) {
 	c.HTML(http.StatusOK, "givefeedback.html", nil)
+}
+func serveLeaderboard(c *gin.Context) {
+	c.HTML(http.StatusOK, "weeklyleaderboard.html", nil)
 }

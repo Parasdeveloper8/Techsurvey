@@ -6,7 +6,6 @@
     <title>Blog Website</title>
     <link rel="stylesheet" href="static/css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -16,12 +15,21 @@
         </div>
         <div class="nav-right">
             <form action="/logout" method="post">
-                <button type="submit" class="create-post-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                </form>
+                <button type="submit" class="create-post-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
             <!--<div class="profile-icon">
                 <img src="profile-pic.jpg" alt="Profile">
             </div>-->
         </div>
+    </nav>
+
+    <!-- Secondary Navigation Bar for Leaderboard -->
+    <nav class="navbar leaderboard-navbar">
+        <button class="leaderboard-btn" onclick="window.location.href='/leaderboard'">
+            <i class="fas fa-trophy"></i> Leaderboard
+        </button>
     </nav>
 
     <!-- Main Content -->
@@ -30,7 +38,7 @@
         <aside class="sidebar">
             <h2>Survey</h2>
             <ul>
-               <li><a href="/surveypage" style="color:black">Surveys of 2024</a></li>
+                <li><a href="/surveypage" style="color:black">Surveys of 2024</a></li>
             </ul>
         </aside>
 
@@ -38,7 +46,7 @@
             <div class="post">
                 <h2>Introducing Techsurvey</h2>
                 <img style="float:right" src="/static/assests/surveyicon.webp" alt="survey-icon" height="200" width="150"/>
-                <p>Give survey and help us to know world better</p>
+                <p>Give survey and help us to know the world better</p>
                 <div class="fake-line"></div>
                 <ul style="margin-top: 5vh;">
                     <li style="color:blue">Frontend Developer</li>
@@ -47,10 +55,11 @@
             </div>
         </section>
     </div>
-    <p style="text-align: center;padding:5px;">If you have any suggestion which can improve this, you can click on this button and write your sugestions</p>
-    <button style="box-shadow:-5px 5px 5px black;
-    background-color: #0066cc;border:none;height:5vh;text-align: center;padding:3px;
-    margin-left: 10%;" onclick="window.location.href='/feedback'">Leave a suggestion</button>
+
+    <p style="text-align: center; padding: 5px;">If you have any suggestions to improve this, click on the button below and leave your feedback.</p>
+    <button style="box-shadow:-5px 5px 5px black; background-color: #0066cc; border: none; height: 5vh; text-align: center; padding: 3px; margin-left: 10%;" 
+            onclick="window.location.href='/feedback'">Leave a suggestion</button>
+
     <footer class="footer">
         <p>&copy; 2024 Techsurvey. All rights reserved.</p>
         <div class="footer-links">
