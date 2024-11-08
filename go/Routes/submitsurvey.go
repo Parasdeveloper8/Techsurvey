@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -73,10 +74,17 @@ func HandleSurveySubmission(c *gin.Context) {
 	fmt.Println("Successfully connected to MySQL database!")
 
 	// Get form data
-	number := c.PostForm("numofp")
+	numberStr := c.PostForm("numofp")
 	favlang := c.PostForm("favp")
+	points := c.PostForm("points")
 	currentDate := time.Now()
-
+	// Convert number to integer
+	number, err := strconv.Atoi(numberStr) // Convert the number string to int
+	if err != nil {
+		log.Printf("Failed to convert number to int: %v", err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid number format"})
+		return
+	}
 	// Insert data into the database
 	query := "INSERT INTO techsurvey.faveprogramlang (email, vote, date, number) VALUES (?, ?, ?, ?)"
 	result, err := db.Exec(query, sessionEmail, favlang, currentDate, number) // Include number in query
@@ -85,7 +93,13 @@ func HandleSurveySubmission(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert data into database or giving survey for more than 1 time"})
 		return
 	}
-
+	fmt.Println(result)
+	// Store points in the database
+	querytwo := "INSERT INTO techsurvey.points (mail, points) VALUES (?, ?)"
+	result, err = db.Exec(querytwo, sessionEmail, points)
+	if err != nil {
+		log.Printf("Failed to insert Points into database: %v", err)
+	}
 	c.Redirect(http.StatusSeeOther, "/afterlog?message=Thanks for taking part in survey")
 	fmt.Println(result)
 }
