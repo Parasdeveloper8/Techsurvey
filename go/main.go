@@ -39,6 +39,7 @@ func main() {
 	router.GET("/feedback", serveGiveFeedBack)
 	router.POST("/submitfav", routes.HandleSurveySubmission)
 	router.POST("/subfeed", auth.CheckEmail(), routes.HandleFeedSubmission)
+	router.GET("/points", auth.CheckEmail(), servePoints)
 	router.Run(":4700")
 }
 
@@ -68,4 +69,7 @@ func serveGiveFeedBack(c *gin.Context) {
 }
 func serveLeaderboard(c *gin.Context) {
 	c.HTML(http.StatusOK, "weeklyleaderboard.html", nil)
+}
+func servePoints(c *gin.Context) {
+	c.HTML(http.StatusOK, "point.html", nil)
 }
