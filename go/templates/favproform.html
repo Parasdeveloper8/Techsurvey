@@ -90,9 +90,8 @@
   <div class="survey-container">
     <h2 class="survey-title">Survey about your languages</h2>
     <form class="survey-form" id="survey-form" action="/submitfav" method="POST">
-      <input type="text" placeholder="number of languages ex:-2" name="numofp" required/>
+      <input type="number" placeholder="number of languages ex:-2" name="numofp" required/>
       <input type="text" name="favp" placeholder="your favourite language" required>
-      <input type="hidden" name="points" value="10" /> 
       <button type="submit">Submit</button>
     </form>
     
@@ -102,38 +101,6 @@
     <br/>
     <br/>
         </div>
-        </div>
-        <script>
-          let points = 0; 
-           // Form submission handler
-       const surveyForm = document.getElementById('survey-form');
-       surveyForm.addEventListener('submit', function(event) {
-        points+=1;  // Example: default points or calculated dynamically
-
-     // Set points value in the hidden input field
-    surveyForm.querySelector('input[name="points"]').value = points;
-    // Create a FormData object with the form data
-    const formData = new FormData(surveyForm);
-
-    // Submit the form data via HTTP POST
-    fetch('/submitfav', {
-        method: 'POST',
-        body: formData,
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Optionally, display a message or handle the response here
-        console.log('Form submitted successfully:', data);
-    })
-    .catch(error => {
-        console.error('Error submitting form:', error);
-    });
-
-    // Optionally reset the form after submission
-    surveyForm.reset();
-});
-
-      </script>
-      
+        </div>  
 </body>
 </html>
