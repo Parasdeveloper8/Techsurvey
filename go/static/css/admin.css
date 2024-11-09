@@ -105,7 +105,7 @@ td {
   border-radius: 8px;
   overflow-y: auto;
   max-width: 400px;
-  max-height: 500px; /* Set a maximum height for scrolling */
+  max-height: 300px; /* Set a maximum height for scrolling */
   flex: 1;
 }
 
@@ -190,4 +190,50 @@ hr {
   border: none;
   border-top: 1px solid #e0e0e0;
   margin: 0;
+}
+/* Admin Buttons */
+.admin-btn {
+  background-color: #ffffff;
+  color: #4a90e2;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-btn i {
+  margin-right: 5px;
+}
+
+.admin-btn:hover {
+  background-color: #e8f0fe;
+}
+/* Mobile Styling for Navbar and Buttons */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .nav-right form, .admin-btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .admin-btn, .create-post-btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
 }

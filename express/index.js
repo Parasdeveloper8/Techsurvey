@@ -17,7 +17,7 @@ app.use(cors(corsOptions)); // Enable CORS with options
 
 import fetchdata from "./Routes/getSurveyData.js";
 
-const port = 6900;
+const port = 7300;
 
 import path from "path";
 
