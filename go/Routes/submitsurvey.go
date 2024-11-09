@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -38,9 +37,9 @@ func init() {
 
 func HandleSurveySubmission(c *gin.Context) {
 	// Retrieve the session from the context or directly from the store
-	session, err := Store.Get(c.Request, "login-session") // Use Store here
+	session, err := Store.Get(c.Request, "login-session")
 	if err != nil {
-		log.Printf("Failed to get session: %v", err) // Log the error
+		log.Printf("Failed to get session: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get session"})
 		return
 	}
@@ -48,7 +47,7 @@ func HandleSurveySubmission(c *gin.Context) {
 	// Get the email from session
 	sessionEmail, ok := session.Values["email"].(string)
 	if !ok || sessionEmail == "" {
-		log.Println("Email not found in session") // Log the error
+		log.Println("Email not found in session")
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Email not found in session"})
 		return
 	}
@@ -62,38 +61,54 @@ func HandleSurveySubmission(c *gin.Context) {
 	// Database connection setup
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err) // Log fatal error
+		log.Fatalf("Failed to connect to database: %v", err)
 	}
 	defer db.Close()
 
 	// Check the connection
 	if err := db.Ping(); err != nil {
-		log.Fatalf("Database connection failed: %v", err) // Log fatal error
+		log.Fatalf("Database connection failed: %v", err)
 	}
 
 	fmt.Println("Successfully connected to MySQL database!")
 
 	// Get form data
-	numberStr := c.PostForm("numofp")
+	number := c.PostForm("numofp")
 	favlang := c.PostForm("favp")
 	points := c.PostForm("points")
 	currentDate := time.Now()
-	// Convert number to integer
-	number, err := strconv.Atoi(numberStr) // Convert the number string to int
+
+	// Convert number to integer with error handling
+	/*number, err := strconv.Atoi(numberStr)
 	if err != nil {
 		log.Printf("Failed to convert number to int: %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid number format"})
 		return
 	}
+	*/
+	var exists bool
+	queryCheck := "SELECT EXISTS(SELECT 1 FROM techsurvey.faveprogramlang WHERE email = ?)"
+	err = db.QueryRow(queryCheck, sessionEmail).Scan(&exists)
+	if err != nil {
+		log.Printf("Failed to check for existing survey entry: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database check failed"})
+		return
+	}
+
+	if exists {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "Survey already completed with this email"})
+		return
+	}
 	// Insert data into the database
 	query := "INSERT INTO techsurvey.faveprogramlang (email, vote, date, number) VALUES (?, ?, ?, ?)"
-	result, err := db.Exec(query, sessionEmail, favlang, currentDate, number) // Include number in query
+	result, err := db.Exec(query, sessionEmail, favlang, currentDate, number)
 	if err != nil {
-		log.Printf("Failed to insert data into database: %v", err) // Log error
+		log.Printf("Failed to insert data into database: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert data into database or giving survey for more than 1 time"})
 		return
 	}
 	fmt.Println(result)
+
 	// Store points in the database
 	querytwo := "INSERT INTO techsurvey.points (mail, points) VALUES (?, ?)"
 	result, err = db.Exec(querytwo, sessionEmail, points)
