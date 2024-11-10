@@ -187,6 +187,11 @@ body {
         justify-content: space-between;
         padding: 0.5rem 0;
     }
+    .leaderboard-navbar{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap:5px;
+    }
 }
 
 /* Styles for the admin panel */
