@@ -43,6 +43,7 @@ func main() {
 	router.GET("/admincomment", serveAdminComment)
 	router.GET("/adminsurvey", serveAdminSurvey)
 	router.GET("/community", auth.CheckEmail(), serveCommunity)
+	router.GET("/adminmessage", serveAdminMessage)
 	router.Run(":4700")
 }
 
@@ -84,4 +85,7 @@ func serveAdminSurvey(c *gin.Context) {
 }
 func serveCommunity(c *gin.Context) {
 	c.HTML(http.StatusOK, "community.html", nil)
+}
+func serveAdminMessage(c *gin.Context) {
+	c.HTML(http.StatusOK, "adminmessage.html", nil)
 }

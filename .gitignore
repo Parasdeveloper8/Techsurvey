@@ -3,4 +3,5 @@ go/static/javascript/admin.js
 go/templates/admin.html
 go/templates/adminsurvey.html
 go/templates/admincomment.html
+go/templates/adminmessage.html
 go/static/javascript/adminapis.js
