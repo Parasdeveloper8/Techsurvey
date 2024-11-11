@@ -44,6 +44,7 @@ func main() {
 	router.GET("/adminsurvey", serveAdminSurvey)
 	router.GET("/community", auth.CheckEmail(), serveCommunity)
 	router.GET("/adminmessage", serveAdminMessage)
+	router.POST("/messagetouser", routes.HandleUpdate)
 	router.Run(":4700")
 }
 
