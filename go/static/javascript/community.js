@@ -1,8 +1,11 @@
+const loader = document.getElementById('loader');
+loader.style.display = 'block';
 document.addEventListener("DOMContentLoaded", () => {
     fetch("http://localhost:7300/getupdate")
       .then(response => response.json())
       .then(data => {
-        console.log(data); // Check structure of data
+        console.log(data);
+         // Check structure of data
         for (let i = 0; i < data.length; i++) {
           // Create a container for the message with styling
           const messageContainer = document.createElement("div");
@@ -27,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
           timeElement.textContent = data[i].time || "No time available";
           timeElement.style.fontSize = "14px";
           timeElement.style.color = "#777";
-  
+          loader.style.display = 'none';
           // Append message and time elements to the container
           messageContainer.appendChild(messageElement);
           messageContainer.appendChild(timeElement);
