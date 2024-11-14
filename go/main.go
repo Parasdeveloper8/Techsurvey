@@ -42,7 +42,7 @@ func main() {
 	router.GET("/points", auth.CheckEmail(), servePoints)
 	router.GET("/admincomment", serveAdminComment)
 	router.GET("/adminsurvey", serveAdminSurvey)
-	router.GET("/community", auth.CheckEmail(), serveCommunity)
+	router.GET("/updatesforuser", auth.CheckEmail(), serveCommunity)
 	router.GET("/adminmessage", serveAdminMessage)
 	router.POST("/messagetouser", routes.HandleUpdate)
 	router.Run(":4700")
