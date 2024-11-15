@@ -67,16 +67,26 @@ body {
     width: 20%;
     background-color: #fff;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 8px 8px 20px 20px; /* Curved bottom edges */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar > img {
+    width: 100%; /* Make image take full width */
+    border-radius: 0 0 20px 20px; /* Curved bottom corners for the image */ 
+    margin: bottom 0;
 }
 
 .sidebar h2 {
     margin-bottom: 1rem;
+    border-radius: 8px;
 }
 
 .sidebar ul {
     list-style: none;
+    padding: 0;
 }
 
 .sidebar li {

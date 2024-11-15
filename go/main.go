@@ -26,7 +26,6 @@ func main() {
 	cors.SetupCORS(router)
 
 	router.GET("/", routes.HandleHome)
-	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
 	router.GET("/logpage", serveLogPage)
 	router.GET("/regpage", serveRegPage)
 	router.GET("/admin", serveAdminPage)
@@ -45,6 +44,13 @@ func main() {
 	router.GET("/updatesforuser", auth.CheckEmail(), serveCommunity)
 	router.GET("/adminmessage", serveAdminMessage)
 	router.POST("/messagetouser", routes.HandleUpdate)
+
+	//Survey Pages routes start
+	router.GET("/favpro", auth.CheckEmail(), serveFavProForm)
+	router.GET("/favframe", auth.CheckEmail(), serveFavFrame)
+	router.GET("/favdev", auth.CheckEmail(), serveFavDev)
+	//Survey Pages routes end
+
 	router.Run(":4700")
 }
 
@@ -89,4 +95,12 @@ func serveCommunity(c *gin.Context) {
 }
 func serveAdminMessage(c *gin.Context) {
 	c.HTML(http.StatusOK, "adminmessage.html", nil)
+}
+
+func serveFavDev(c *gin.Context) {
+	c.HTML(http.StatusOK, "favdev.html", nil)
+}
+
+func serveFavFrame(c *gin.Context) {
+	c.HTML(http.StatusOK, "favframe.html", nil)
 }
