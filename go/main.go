@@ -90,7 +90,7 @@ func serveGiveFeedBack(c *gin.Context) {
 	c.HTML(http.StatusOK, "givefeedback.html", nil)
 }
 func serveLeaderboard(c *gin.Context) {
-	c.HTML(http.StatusOK, "weeklyleaderboard.html", nil)
+	c.HTML(http.StatusOK, "leaderboard.html", nil)
 }
 func servePoints(c *gin.Context) {
 	c.HTML(http.StatusOK, "point.html", nil)
