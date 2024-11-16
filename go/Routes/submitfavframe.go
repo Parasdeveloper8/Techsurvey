@@ -13,7 +13,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var Store *sessions.CookieStore
+var Storeofavframe *sessions.CookieStore
 
 func init() {
 	// Load .env file
@@ -25,8 +25,8 @@ func init() {
 		log.Fatal("Secret key not found in environment")
 	}
 	// Initialize session store with secret key
-	Store = sessions.NewCookieStore(secretKey)
-	Store.Options = &sessions.Options{
+	Storeofavframe = sessions.NewCookieStore(secretKey)
+	Storeofavframe.Options = &sessions.Options{
 		Path:     "/",
 		MaxAge:   86400 * 7, // 1 week
 		HttpOnly: true,
@@ -34,9 +34,9 @@ func init() {
 		SameSite: http.SameSiteLaxMode,
 	}
 }
-func HandleSurveySubmission(c *gin.Context) {
+func HandleFavFrameSurveySubmission(c *gin.Context) {
 	// Retrieve the session from the context or directly from the store
-	session, err := Store.Get(c.Request, "login-session") // Use Store here
+	session, err := Storeofavframe.Get(c.Request, "login-session") // Use Store here
 	if err != nil {
 		log.Printf("Failed to get session: %v", err) // Log the error
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to get session"})
@@ -67,11 +67,11 @@ func HandleSurveySubmission(c *gin.Context) {
 	fmt.Println("Successfully connected to MySQL database!")
 	// Get form data
 	number := c.PostForm("numofp")
-	favlang := c.PostForm("favp")
+	favframe := c.PostForm("favp")
 	currentDate := time.Now()
 	// Insert data into the database
-	query := "INSERT INTO techsurvey.faveprogramlang (email, vote, date, number) VALUES (?, ?, ?, ?)"
-	result, err := db.Exec(query, sessionEmail, favlang, currentDate, number) // Include number in query
+	query := "INSERT INTO techsurvey.faveframe(email, vote, date, number) VALUES (?, ?, ?, ?)"
+	result, err := db.Exec(query, sessionEmail, favframe, currentDate, number) // Include number in query
 	if err != nil {
 		log.Printf("Failed to insert data into database: %v", err) // Log error
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert data into database or giving survey for more than 1 time"})

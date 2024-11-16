@@ -36,7 +36,13 @@ func main() {
 	router.GET("/afterlog", auth.CheckEmail(), serveAfterLog)
 	router.POST("/logout", auth.HandleLogout)
 	router.GET("/feedback", serveGiveFeedBack)
-	router.POST("/submitfav", routes.HandleSurveySubmission)
+
+	//survey submission routes start
+	router.POST("/submitfav", routes.HandleFavProSurveySubmission)
+	router.POST("/submitfavframe", routes.HandleFavFrameSurveySubmission)
+	router.POST("/submitfavdev", routes.HandleFavDevSurveySubmission)
+	//survey submission routes end
+
 	router.POST("/subfeed", auth.CheckEmail(), routes.HandleFeedSubmission)
 	router.GET("/points", auth.CheckEmail(), servePoints)
 	router.GET("/admincomment", serveAdminComment)
