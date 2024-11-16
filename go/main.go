@@ -37,7 +37,10 @@ func main() {
 	router.POST("/logout", auth.HandleLogout)
 	router.GET("/feedback", serveGiveFeedBack)
 
+	//points related routes start
 	router.GET("/getpoints", routes.GetPoint)
+	router.POST("/transferpoints", routes.TransferPoints)
+	//points related routes end
 
 	//survey submission routes start
 	router.POST("/submitfav", routes.HandleFavProSurveySubmission)
