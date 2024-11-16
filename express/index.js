@@ -7,6 +7,9 @@ import fetchfeed from "./Routes/getFeedback.js";
 import fetchupdate from "./Routes/getUpdates.js";
 
 import fetchUserNumber from "./Routes/getNumUser.js";
+
+import fetchLeaderboardData from "./Routes/getLeaderboarddata.js";
+
 // Configure CORS
 const corsOptions = {
     origin: 'http://localhost:4700', // Allow requests from your frontend's origin
@@ -45,5 +48,7 @@ app.use("/getfeedback",fetchfeed);
 app.use("/getupdate",fetchupdate);
 
 app.use("/getUserNumber",fetchUserNumber);
+
+app.use("/leaderboarddata",fetchLeaderboardData);
 
 app.listen(port , ()=>clog(`server is running on port ${port}`));
