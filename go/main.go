@@ -37,6 +37,8 @@ func main() {
 	router.POST("/logout", auth.HandleLogout)
 	router.GET("/feedback", serveGiveFeedBack)
 
+	router.GET("/getpoints", routes.GetPoint)
+
 	//survey submission routes start
 	router.POST("/submitfav", routes.HandleFavProSurveySubmission)
 	router.POST("/submitfavframe", routes.HandleFavFrameSurveySubmission)
