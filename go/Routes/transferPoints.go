@@ -83,7 +83,7 @@ func TransferPoints(c *gin.Context) {
 	fmt.Println("Successfully connected to MySQL database!")
 
 	query := `UPDATE techsurvey.users 
-	SET points = points + ? 
+	SET points = ? 
 	WHERE email = ?;`
 	_, err = db.Exec(query, transferData.Points, sessionEmail)
 	if err != nil {
