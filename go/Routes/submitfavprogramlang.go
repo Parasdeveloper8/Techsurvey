@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/Parasdeveloper8/myexpgoweb/email"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
@@ -34,6 +35,7 @@ func init() {
 		SameSite: http.SameSiteLaxMode,
 	}
 }
+
 func HandleFavProSurveySubmission(c *gin.Context) {
 	// Retrieve the session from the context or directly from the store
 	session, err := Store.Get(c.Request, "login-session") // Use Store here
@@ -77,6 +79,15 @@ func HandleFavProSurveySubmission(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert data into database or giving survey for more than 1 time"})
 		return
 	}
+	// Send a thank-you email
+	subject := "Thank You for Participating in the Survey!"
+	body := fmt.Sprintf("Hi,\n\nThank you for completing the survey!\nYour favorite programming language: %s\nYour response: %s\n\nWe appreciate your time.", favlang, number)
+	err = email.SendMail(sessionEmail, subject, body)
+	if err != nil {
+		log.Printf("Failed to send email: %v", err)
+		// Continue processing; email failure shouldn't prevent a response
+	}
+
 	c.Redirect(http.StatusSeeOther, "/afterlog?message=Thanks for taking part in survey")
 	fmt.Println(result)
 }
