@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/Parasdeveloper8/myexpgoweb/email"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/joho/godotenv"
@@ -76,6 +77,14 @@ func HandleFavFrameSurveySubmission(c *gin.Context) {
 		log.Printf("Failed to insert data into database: %v", err) // Log error
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to insert data into database or giving survey for more than 1 time"})
 		return
+	}
+	// Send a thank-you email
+	subject := "Thank You for Participating in the Survey!"
+	body := fmt.Sprintf("Hi,\n\nThank you for completing the survey!\nYour favorite framework: %s\nYour response: %s\n\nWe appreciate your time.", favframe, number)
+	err = email.SendMail(sessionEmail, subject, body)
+	if err != nil {
+		log.Printf("Failed to send email: %v", err)
+		// Continue processing; email failure shouldn't prevent a response
 	}
 	c.Redirect(http.StatusSeeOther, "/afterlog?message=Thanks for taking part in survey")
 	fmt.Println(result)
