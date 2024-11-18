@@ -6,6 +6,7 @@ import (
 	routes "github.com/Parasdeveloper8/myexpgoweb/Routes"
 	"github.com/Parasdeveloper8/myexpgoweb/auth"
 	"github.com/Parasdeveloper8/myexpgoweb/cors"
+	"github.com/Parasdeveloper8/myexpgoweb/forgetpassword"
 	"github.com/Parasdeveloper8/myexpgoweb/limiter"
 	"github.com/gin-gonic/gin"
 )
@@ -61,6 +62,10 @@ func main() {
 	router.GET("/favframe", auth.CheckEmail(), serveFavFrame)
 	router.GET("/favdev", auth.CheckEmail(), serveFavDev)
 	//Survey Pages routes end
+
+	//Forget password related routes start
+	router.POST("/gentoken", forgetpassword.GenToken)
+	//Forget password related routes end
 
 	router.Run(":4700")
 }

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Page</title>
   <style>
+    /* Your existing styles */
     * {
       margin: 0;
       padding: 0;
@@ -74,6 +75,20 @@
     .login-form button:active {
       transform: scale(0.98);
     }
+
+    .forgot-password {
+      display: block;
+      margin-top: 1rem;
+      text-align: center;
+      color: #007bff;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -84,6 +99,33 @@
       <input type="password" name="password" placeholder="Password" required>
       <button type="submit">Submit</button>
     </form>
+    <a class="forgot-password" id="forgot-password">Forgot Password</a>
   </div>
+
+  <script>
+    const forgotPasswordLink = document.getElementById('forgot-password');
+
+    forgotPasswordLink.addEventListener('click', () => {
+      const email = prompt('Please enter your email:');
+      if (email) {
+        fetch('http://localhost:4700/gentoken', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        })
+        .then(response => {
+          if (response.ok) {
+            alert('Password reset link sent to your email!');
+          } else {
+            alert('Error: Unable to send reset link. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Something went wrong. Please try again later.');
+        });
+      }
+    });
+  </script>
 </body>
 </html>
