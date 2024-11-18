@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="static/css/admin.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Container styling */
+#message-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+#message-tab label {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 10px;
+    align-self: flex-start;
+}
+
+/* Textarea styling */
+#message-tab textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 1em;
+    margin-bottom: 15px;
+    resize: none;
+    transition: border-color 0.3s ease;
+}
+
+#message-tab textarea:focus {
+    border-color: #0066cc;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
+}
+
+/* Button styling */
+.create-post-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #0066cc;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-post-btn:hover {
+    background-color: #005bb5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    #message-tab {
+        padding: 15px;
+    }
+
+    #message-tab label, 
+    #message-tab textarea, 
+    .create-post-btn {
+        font-size: 0.9em;
+    }
+
+    .create-post-btn {
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">Techsurvey</div>
+        </div>
+        <div class="nav-right">
+            <form action="/admin" method="get">
+                <button type="submit" class="create-post-btn"><i class="fa fa-home"></i> Home</button>
+            </form>
+            <button onclick="location.href='/adminsurvey'" class="admin-btn"><i class="fa fa-chart-bar"></i> Survey Data</button>
+            <button onclick="location.href='/admincomment'" class="admin-btn"><i class="fa fa-comments"></i> Comments</button>
+        </div>
+    </nav>
+    <form action="/messagetouser" method="post" id="message-tab">
+    <label for="message">Your message</label>
+    <textarea id="message" rols="5" cols="25" name="update"></textarea>
+    <button type="submit" class="create-post-btn">Send</button>
+    </form>
+    <script src="static/javascript/adminapis.js"></script>
+</body>
+</html>
