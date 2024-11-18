@@ -64,8 +64,9 @@ func main() {
 	//Survey Pages routes end
 
 	//Forget password related routes start
-	router.POST("/gentoken", forgetpassword.GenToken)
-	router.GET("/resetpass", forgetpassword.ResetPassword)
+	router.POST("/resetlink", forgetpassword.ResetLink)  //To send Mails
+	router.GET("/resetpasspage", serveResetPasswordPage) //Reset Password Page
+	router.POST("/resetpassword", forgetpassword.ResetPassword)
 	//Forget password related routes end
 
 	router.Run(":4700")
@@ -120,4 +121,7 @@ func serveFavDev(c *gin.Context) {
 
 func serveFavFrame(c *gin.Context) {
 	c.HTML(http.StatusOK, "favframe.html", nil)
+}
+func serveResetPasswordPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "newpasspage.html", nil)
 }

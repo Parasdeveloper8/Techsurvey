@@ -91,17 +91,16 @@
 <body>
   <div class="login-container">
     <h2 class="login-title">Reset Your Password</h2>
-    <form class="reset-form" action="/" method="post">
+    <form class="reset-form" action="/resetpassword" method="post">
+      <div>
+        <label for="email">Enter Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" required>
+      </div>
+
       <!-- Left column for New Password -->
       <div>
         <label for="new-password">New Pass</label>
         <input type="password" name="new-password" id="new-password" placeholder="New Password" required>
-      </div>
-
-      <!-- Right column for Confirm Password -->
-      <div>
-        <label for="confirm-password">Confirm Pass</label>
-        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
       </div>
 
       <!-- Submit button -->

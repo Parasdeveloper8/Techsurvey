@@ -108,7 +108,7 @@
     forgotPasswordLink.addEventListener('click', () => {
       const email = prompt('Please enter your email:');
       if (email) {
-        fetch('http://localhost:4700/gentoken', {
+        fetch('http://localhost:4700/resetlink', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email })
