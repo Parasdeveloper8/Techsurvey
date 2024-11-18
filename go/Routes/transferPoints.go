@@ -60,7 +60,7 @@ func TransferPoints(c *gin.Context) {
 		return
 	}
 	// Get DSN from env file
-	dsn := os.Getenv("DSN")
+	dsn := os.Getenv("DB_URL")
 	if len(dsn) == 0 {
 		log.Println("DSN not found in environment variables")
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Configuration error"})

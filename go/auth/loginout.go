@@ -43,7 +43,7 @@ func init() {
 		Secure:   false, // Use `true` in production
 		SameSite: http.SameSiteLaxMode,
 	}
-	dsn = os.Getenv("DSN")
+	dsn = os.Getenv("DB_URL")
 }
 
 // Middleware to add session store to context

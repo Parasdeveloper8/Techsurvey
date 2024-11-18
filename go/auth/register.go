@@ -23,7 +23,7 @@ func init() {
 
 func HandleRegister(c *gin.Context) {
 	// Get DSN from environment variables
-	dsn := os.Getenv("DSN")
+	dsn := os.Getenv("DB_URL")
 	if dsn == "" {
 		log.Fatal("DSN not found in environment variables")
 	}

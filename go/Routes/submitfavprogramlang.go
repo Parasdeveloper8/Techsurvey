@@ -52,7 +52,7 @@ func HandleFavProSurveySubmission(c *gin.Context) {
 		return
 	}
 	// Get DSN from env file
-	dsn := os.Getenv("DSN")
+	dsn := os.Getenv("DB_URL")
 	if dsn == "" {
 		log.Fatal("DSN not found in environment variables")
 	}
