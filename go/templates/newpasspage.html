@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password</title>
+  <style>
+    /* Reset all defaults */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f0f4f8;
+    }
+
+    .login-container {
+      background: #ffffff;
+      width: 100%;
+      max-width: 600px;
+      padding: 2rem;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .login-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .reset-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Equal width columns */
+      gap: 1rem;
+    }
+
+    .reset-form input[type="password"] {
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #333;
+      width: 100%;
+    }
+
+    .reset-form input[type="password"]:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+
+    .reset-form button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #007bff;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .reset-form button:hover {
+      background-color: #0056b3;
+    }
+
+    .reset-form button:active {
+      transform: scale(0.98);
+    }
+
+    /* Optional: Center the submit button */
+    .reset-form .submit-btn {
+      grid-column: span 2;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2 class="login-title">Reset Your Password</h2>
+    <form class="reset-form" action="/" method="post">
+      <!-- Left column for New Password -->
+      <div>
+        <label for="new-password">New Pass</label>
+        <input type="password" name="new-password" id="new-password" placeholder="New Password" required>
+      </div>
+
+      <!-- Right column for Confirm Password -->
+      <div>
+        <label for="confirm-password">Confirm Pass</label>
+        <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
+      </div>
+
+      <!-- Submit button -->
+      <div class="submit-btn">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+

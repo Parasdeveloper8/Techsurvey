@@ -1,12 +1,15 @@
 package forgetpassword
 
 import (
+	"crypto/sha256"
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"time"
 
+	"github.com/Parasdeveloper8/myexpgoweb/email"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql" // MySQL driver
 	"github.com/golang-jwt/jwt"
@@ -17,6 +20,11 @@ var (
 	jwtKey []byte
 )
 
+func hashToken(token string) string {
+	h := sha256.New()
+	h.Write([]byte(token))
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
 func init() {
 	// Load .env file
 	if err := godotenv.Load("../.env"); err != nil {
@@ -82,10 +90,11 @@ func GenToken(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
 	}
+	hashedToken := hashToken(tokenString)
 
 	// Insert the token into the database
 	insertQuery := "INSERT INTO techsurvey.reset_tokens (email, token, expires_at) VALUES (?, ?, ?)"
-	_, err = db.Exec(insertQuery, passData.Email, tokenString, time.Unix(claims.ExpiresAt, 0))
+	_, err = db.Exec(insertQuery, passData.Email, hashedToken, time.Unix(claims.ExpiresAt, 0))
 	if err != nil {
 		log.Printf("Failed to save token: %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save reset token"})
@@ -94,5 +103,12 @@ func GenToken(c *gin.Context) {
 
 	// Success response
 	c.JSON(http.StatusOK, gin.H{"message": "Password reset link generated successfully", "token": tokenString})
-
+	subject := "Password Reset Link"
+	body := fmt.Sprintf("This is your password reset link: http://localhost:4700/resetpass?token=%s", tokenString)
+	err = email.SendMail(passData.Email, subject, body)
+	if err != nil {
+		log.Printf("Failed to send email: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send email"})
+		return
+	}
 }

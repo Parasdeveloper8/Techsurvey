@@ -65,6 +65,7 @@ func main() {
 
 	//Forget password related routes start
 	router.POST("/gentoken", forgetpassword.GenToken)
+	router.GET("/resetpass", forgetpassword.ResetPassword)
 	//Forget password related routes end
 
 	router.Run(":4700")
