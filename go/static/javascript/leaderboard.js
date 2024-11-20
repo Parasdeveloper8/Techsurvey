@@ -19,6 +19,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
+function ordinal(rank) {
+    // Special cases for numbers ending in 11, 12, 13
+    if (rank % 100 >= 11 && rank % 100 <= 13) {
+        return rank + "th";
+    }
+    // Determine suffix based on last digit
+    switch (rank % 10) {
+        case 1: return rank + "st";
+        case 2: return rank + "nd";
+        case 3: return rank + "rd";
+        default: return rank + "th";
+    }
+}
+
 function createLeaderboard(leaderboardData) {
     const container = document.getElementById("leaderboard-container");
 
@@ -50,9 +64,9 @@ function createLeaderboard(leaderboardData) {
     leaderboardData.forEach((item, index) => {
         const row = document.createElement("tr");
 
-        // Rank column
+        // Rank column with ordinal suffix
         const rankCell = document.createElement("td");
-        rankCell.textContent = index + 1;
+        rankCell.textContent = ordinal(index + 1); // Use the ordinal function
         rankCell.style.padding = "12px";
         rankCell.style.textAlign = "center"; // Align center for rank
         rankCell.style.border = "1px solid #ddd";
@@ -88,6 +102,3 @@ function createLeaderboard(leaderboardData) {
     container.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
     container.style.backgroundColor = "#f9f9f9";
 }
-
-
-
